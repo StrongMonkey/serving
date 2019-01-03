@@ -62,7 +62,7 @@ required = [
 
 [[constraint]]
   name = "github.com/rancher/rio"
-  revision = "e969cf27890eb0ff3a2fb7f7b1ef9d4529a580a3"
+  revision = "bbff273dd95675c841f48e6d79edc3f66b9001b0"
   source = "https://github.com/StrongMonkey/rio.git"
 
 [prune]

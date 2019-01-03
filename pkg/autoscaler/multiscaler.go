@@ -28,6 +28,8 @@ import (
 	"k8s.io/apimachinery/pkg/api/errors"
 
 	kpa "github.com/knative/serving/pkg/apis/autoscaling/v1alpha1"
+	autoscalev1 "github.com/rancher/rio/types/apis/rio-autoscale.cattle.io/v1"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
 const (
@@ -162,6 +164,7 @@ func (m *MultiScaler) Watch(fn func(string)) {
 }
 
 func (m *MultiScaler) createScaler(ctx context.Context, kpa *kpa.PodAutoscaler) (*scalerRunner, error) {
+	logger := logging.FromContext(ctx)
 	scaler, err := m.uniScalerFactory(kpa, m.dynConfig)
 	if err != nil {
 		return nil, err
@@ -189,7 +192,6 @@ func (m *MultiScaler) createScaler(ctx context.Context, kpa *kpa.PodAutoscaler) 
 		}
 	}()
 
-	kpaKey := NewKpaKey(kpa.Namespace, kpa.Name)
 	go func() {
 		for {
 			select {
@@ -199,7 +201,7 @@ func (m *MultiScaler) createScaler(ctx context.Context, kpa *kpa.PodAutoscaler) 
 				return
 			case desiredScale := <-scaleChan:
 				if runner.updateLatestScale(desiredScale) {
-					m.watcher(kpaKey)
+					update(ctx, kpa.Namespace, kpa.Name, desiredScale, logger)
 				}
 			}
 		}
@@ -241,4 +243,30 @@ func (m *MultiScaler) RecordStat(key string, stat Stat) {
 		ctx := logging.WithLogger(context.TODO(), logger)
 		scaler.scaler.Record(ctx, stat)
 	}
+}
+
+var SyncMap sync.Map
+
+type AutoscalerClientKey struct{}
+
+func update(ctx context.Context, namespace, name string, desiredScale int32, logger *zap.SugaredLogger) {
+	client, ok := ctx.Value(AutoscalerClientKey{}).(autoscalev1.ServiceScaleRecommendationClient)
+	if !ok {
+		return
+	}
+	ssr, err := client.Get(namespace, name, metav1.GetOptions{})
+	if err != nil {
+		logger.Error(fmt.Sprintf("failed to get ServiceScaleRecommendation. Error: %v", err))
+		return
+	}
+	if ssr.Status.DesiredScale != &desiredScale {
+		ssr.Status.DesiredScale = &desiredScale
+		SyncMap.Store(fmt.Sprintf("%s/%s", namespace, name), false)
+	}
+
+	if _, err := client.Update(ssr); err != nil {
+		logger.Error(fmt.Sprintf("failed to update ServiceScaleRecommendation. Error: %v", err))
+		return
+	}
+	logger.Debug(fmt.Sprintf("Updated ServiceScaleRecommendation %s/%s to desiredScale %v", namespace, name, desiredScale))
 }

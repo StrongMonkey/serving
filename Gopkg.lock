@@ -523,9 +523,10 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:6f7f11c6319d5fd9fa7f714a265d5f561ee063f13e18a80250ce3ae398b32856"
+  digest = "1:6574d297e9528acc2d9bbde2c471c466deec05993800196744674d6eb2b4f156"
   name = "github.com/rancher/norman"
   packages = [
+    "condition",
     "controller",
     "httperror",
     "lifecycle",
@@ -537,6 +538,7 @@
     "types",
     "types/convert",
     "types/definition",
+    "types/mapper",
     "types/slice",
     "types/values",
   ]
@@ -544,12 +546,29 @@
   revision = "0557aa4ff31a3a0f007dcb1b684894f23cda390c"
 
 [[projects]]
-  digest = "1:9dde1c3797d99028cca17bcc90140b9bf9f2b956529c97781e9feaa405959f36"
+  digest = "1:1b0a3d377cc5e86fff8d3eb716d77e58712a95afc9f8bc60b3ca405d7d7f4809"
   name = "github.com/rancher/rio"
-  packages = ["types/apis/rio-autoscale.cattle.io/v1"]
+  packages = [
+    "types/apis/rio-autoscale.cattle.io/v1",
+    "types/apis/rio.cattle.io/v1",
+  ]
   pruneopts = "NUT"
-  revision = "e969cf27890eb0ff3a2fb7f7b1ef9d4529a580a3"
+  revision = "bbff273dd95675c841f48e6d79edc3f66b9001b0"
   source = "https://github.com/StrongMonkey/rio.git"
+
+[[projects]]
+  branch = "master"
+  digest = "1:243a661cc69cdd7f79724d731eea77337bc462da8b9ab73ad809327e08a9e596"
+  name = "github.com/rancher/types"
+  packages = [
+    "apis/management.cattle.io/v3",
+    "apis/project.cattle.io/v3",
+    "image",
+    "mapper",
+    "status",
+  ]
+  pruneopts = "NUT"
+  revision = "a6037e6ab730d9c660f0dad7f95a3880dcfe773d"
 
 [[projects]]
   digest = "1:d848e2bdc690ea54c4b49894b67a05db318a97ee6561879b814c2c1f82f61406"
