@@ -406,6 +406,14 @@
   revision = "c5490439ff6ffc1132f5aab93b3afca9b226e5a0"
 
 [[projects]]
+  digest = "1:4059c14e87a2de3a434430340521b5feece186c1469eff0834c29a63870de3ed"
+  name = "github.com/konsorten/go-windows-terminal-sequences"
+  packages = ["."]
+  pruneopts = "NUT"
+  revision = "5c8c8bd35d3832f5d134ae1e1e375b69a4d25242"
+  version = "v1.0.1"
+
+[[projects]]
   digest = "1:56dbf15e091bf7926cb33a57cb6bdfc658fc6d3498d2f76f10a97ce7856f1fde"
   name = "github.com/markbates/inflect"
   packages = ["."]
@@ -512,6 +520,44 @@
   ]
   pruneopts = "NUT"
   revision = "282c8707aa210456a825798969cc27edda34992a"
+
+[[projects]]
+  branch = "master"
+  digest = "1:6f7f11c6319d5fd9fa7f714a265d5f561ee063f13e18a80250ce3ae398b32856"
+  name = "github.com/rancher/norman"
+  packages = [
+    "controller",
+    "httperror",
+    "lifecycle",
+    "metrics",
+    "name",
+    "objectclient",
+    "objectclient/dynamic",
+    "restwatch",
+    "types",
+    "types/convert",
+    "types/definition",
+    "types/slice",
+    "types/values",
+  ]
+  pruneopts = "NUT"
+  revision = "0557aa4ff31a3a0f007dcb1b684894f23cda390c"
+
+[[projects]]
+  digest = "1:9dde1c3797d99028cca17bcc90140b9bf9f2b956529c97781e9feaa405959f36"
+  name = "github.com/rancher/rio"
+  packages = ["types/apis/rio-autoscale.cattle.io/v1"]
+  pruneopts = "NUT"
+  revision = "e969cf27890eb0ff3a2fb7f7b1ef9d4529a580a3"
+  source = "https://github.com/StrongMonkey/rio.git"
+
+[[projects]]
+  digest = "1:d848e2bdc690ea54c4b49894b67a05db318a97ee6561879b814c2c1f82f61406"
+  name = "github.com/sirupsen/logrus"
+  packages = ["."]
+  pruneopts = "NUT"
+  revision = "bcd833dfe83d3cebad139e4a29ed79cb2318bf95"
+  version = "v1.2.0"
 
 [[projects]]
   digest = "1:e3707aeaccd2adc89eba6c062fec72116fe1fc1ba71097da85b4d8ae1668a675"
@@ -752,7 +798,7 @@
   version = "kubernetes-1.11.3"
 
 [[projects]]
-  digest = "1:e430de0896db98fb93a75f45ace427a4b6d09028777498b7c6a25d33866efdd6"
+  digest = "1:3b9ff4707e01ea2cab33ffe94145a133c9fddaeb2d7012b63b67823fc88b3f86"
   name = "k8s.io/apimachinery"
   packages = [
     "pkg/api/equality",
@@ -786,6 +832,7 @@
     "pkg/util/json",
     "pkg/util/mergepatch",
     "pkg/util/net",
+    "pkg/util/rand",
     "pkg/util/runtime",
     "pkg/util/sets",
     "pkg/util/sets/types",
@@ -1100,6 +1147,7 @@
     "github.com/knative/test-infra",
     "github.com/mattbaird/jsonpatch",
     "github.com/pkg/errors",
+    "github.com/rancher/rio/types/apis/rio-autoscale.cattle.io/v1",
     "go.opencensus.io/exporter/prometheus",
     "go.opencensus.io/stats",
     "go.opencensus.io/stats/view",
